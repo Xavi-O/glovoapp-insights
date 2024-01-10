@@ -1,12 +1,10 @@
 import {
-  LightBulbIcon,
   SearchIcon,
   StatusOfflineIcon,
   StatusOnlineIcon,
 } from "@heroicons/react/outline";
 import {
   Badge,
-  Flex,
   Tab,
   TabGroup,
   TabList,
@@ -57,7 +55,7 @@ export default function Kfc() {
   const allStatusFilter = (event) => {
     setallStatus(
       all.filter((row) =>
-        row.title.toLowerCase().includes(event.target.value.toLowerCase())
+        row.title.toLowerCase().replaceAll(' ', '').includes(event.target.value.toLowerCase().replaceAll(' ', ''))
       )
     );
   };

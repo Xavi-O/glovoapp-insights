@@ -10,7 +10,7 @@ export default function Logout() {
       <Metric>
         You are about to be logged out
       </Metric>
-      <Grid numItemsMd={2} numItemsLg={2} className="gap-6 mt-6 mb-6 mr-12">
+      <Grid numItemsMd={2} numItemsLg={2} className="gap-6 mt-6 mb-6">
         <Button><Link to='/home'>Stay Signed In</Link></Button>
         <Button color='red'><Link to='/login'>Confirm Logout</Link></Button>
       </Grid>

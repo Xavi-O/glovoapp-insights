@@ -2,10 +2,6 @@ import { Button, Card, Grid, Metric, TextInput } from "@tremor/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function details() {
-  alert("hello");
-}
-
 export default function Login() {
   return (
     <>
