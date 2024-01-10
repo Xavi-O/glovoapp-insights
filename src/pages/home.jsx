@@ -26,7 +26,7 @@ export default function Home() {
           Welcome to our GlovoApp Insights Hub, a proprietary platform designed
           for account managers and management analysts
         </Text>
-        <Flex className="my-10">
+        <Grid numItemsMd={2} numItemsLg={2} className="gap-6 mt-6 mb-6 mr-12">
           <Card className="m-6 text-2xl">
             <Subtitle>Benefits</Subtitle>
             <List>
@@ -56,7 +56,7 @@ export default function Home() {
               </Text>
             </List>
           </Card>
-        </Flex>
+        </Grid>
         <Title className="text-2xl">Key Features</Title>
         <Subtitle className="mt-5">Top Performing Products Dashboard</Subtitle>
         <Text className="w-2/3 mx-auto leading-6">

@@ -5,6 +5,7 @@ import {
   HomeIcon,
   OfficeBuildingIcon,
   ShoppingBagIcon,
+  StopIcon,
 } from "@heroicons/react/solid";
 ("use client");
 import { Tab, TabGroup, TabList } from "@tremor/react";
@@ -24,7 +25,7 @@ export default function Root() {
               src="glovo-logo.svg"
             ></img>
           </Link>
-
+          
           <TabGroup className="ml-4">
             <TabList color="emerald" className="w-3/5">
               <NavLink to={`/home`}>
@@ -51,6 +52,13 @@ export default function Root() {
               <NavLink to={`/kfc-store`}>
                 <Tab className="mt-8" icon={ShoppingBagIcon}>
                   KFC
+                </Tab>
+              </NavLink>
+            </TabList>
+            <TabList color="red" className="w-3/5">
+              <NavLink to={`/logout`}>
+                <Tab className="mt-8" icon={StopIcon}>
+                  Logout
                 </Tab>
               </NavLink>
             </TabList>

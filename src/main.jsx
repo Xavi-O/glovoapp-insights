@@ -8,6 +8,8 @@ import Dashboard from './pages/dashboard.jsx';
 import Stores from './pages/stores.jsx';
 import Kfc from './pages/kfc.jsx';
 import ErrorPage from './pages/error-page.jsx';
+import Logout from './pages/logout.jsx';
+import Login from './pages/login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Navigate to="/home" replace />
+        element: <Navigate to="/login" replace />
       },
       {
         path: "/home",
@@ -35,7 +37,15 @@ const router = createBrowserRouter([
         path: "/kfc-store",
         element: <Kfc />,
       },
+      {
+        path: "/logout",
+        element: <Logout />,
+      },
     ]
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
