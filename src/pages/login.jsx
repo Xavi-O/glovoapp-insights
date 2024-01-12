@@ -103,9 +103,7 @@ export default function Login() {
 
   return (
     <div className="login-form flex flex-col h-screen justify-center items-center">
-      {isSubmitted
-        ? window.location.replace("http://localhost:5173/home")
-        : renderForm}
+      {isSubmitted ? window.location.replace("/home") : renderForm}
     </div>
   );
 }
