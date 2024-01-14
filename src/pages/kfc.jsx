@@ -31,10 +31,16 @@ export default function Kfc() {
 
   //Fetch time and city routes
   async function fetchProducts() {
-    const timeResponse = await fetch("https://horrible-bird-24.telebit.io/time");
+    const timeResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/time"
+    );
     const allResponse = await fetch("https://horrible-bird-24.telebit.io/kfc");
-    const activeResponse = await fetch("https://horrible-bird-24.telebit.io/kfc/active");
-    const inactiveResponse = await fetch("https://horrible-bird-24.telebit.io/kfc/inactive");
+    const activeResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/kfc/active"
+    );
+    const inactiveResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/kfc/inactive"
+    );
 
     const time = await timeResponse.json();
     setTimeData(time);
@@ -56,7 +62,10 @@ export default function Kfc() {
   const allStatusFilter = (event) => {
     setallStatus(
       all.filter((row) =>
-        row.title.toLowerCase().replaceAll(' ', '').includes(event.target.value.toLowerCase().replaceAll(' ', ''))
+        row.title
+          .toLowerCase()
+          .replaceAll(" ", "")
+          .includes(event.target.value.toLowerCase().replaceAll(" ", ""))
       )
     );
   };
@@ -202,7 +211,14 @@ export default function Kfc() {
                                 : "Available"}
                             </TableCell>
                           </Badge>
-                          <TableCell><Badge icon={CheckCircleIcon} className="bg-transparent">WhatsApp</Badge></TableCell>
+                          <TableCell>
+                            <Badge
+                              icon={CheckCircleIcon}
+                              className="bg-transparent"
+                            >
+                              WhatsApp
+                            </Badge>
+                          </TableCell>
                         </TableRow>
                       );
                     })
