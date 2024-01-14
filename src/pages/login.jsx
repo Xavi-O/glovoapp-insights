@@ -1,4 +1,3 @@
-import { BanIcon } from "@heroicons/react/outline";
 import {
   Button,
   Metric,
@@ -9,8 +8,6 @@ import {
   Card,
 } from "@tremor/react";
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { Navigate } from "react-router-dom";
 
 export default function Login() {
   // React States
@@ -50,6 +47,8 @@ export default function Login() {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsSubmitted(true);
+        //retrieved the username
+        const userName = document.getElementById("userTxt").value;
       }
     } else {
       // Username not found
@@ -63,47 +62,49 @@ export default function Login() {
       <Italic className="error">{errorMessages.message}</Italic>
     );
 
-  // JSX code for login form
-  const renderForm = (
-    <div className="form flex flex-col h-screen justify-center items-center">
-      <Metric className="title">Sign In</Metric>
-      <Card>
-        <form onSubmit={handleSubmit}>
-          <div className="input-container mb-8">
-            <Title>Username</Title>
-            <TextInput
-              error={renderErrorMessage("uname") ? true : false}
-              errorMessage={
-                renderErrorMessage("uname") ? renderErrorMessage("uname") : ""
-              }
-              type="text"
-              name="uname"
-              required
-            />
-          </div>
-          <div className="input-container">
-            <Title>Password</Title>
-            <TextInput
-              error={renderErrorMessage("pass") ? true : false}
-              errorMessage={
-                renderErrorMessage("pass") ? renderErrorMessage("pass") : ""
-              }
-              type="password"
-              name="pass"
-              required
-            />
-          </div>
-          <Button className="mt-6" type="submit">
-            Login
-          </Button>
-        </form>
-      </Card>
-    </div>
-  );
-
   return (
     <div className="login-form flex flex-col h-screen justify-center items-center">
-      {isSubmitted ? window.location.replace("/home") : renderForm}
+      {isSubmitted ? (
+        window.location.replace("/home")
+      ) : (
+        <div className="form flex flex-col h-screen justify-center items-center">
+          <Metric className="title">Sign In</Metric>
+          <Card>
+            <form onSubmit={handleSubmit}>
+              <div className="input-container mb-8">
+                <Title>Username</Title>
+                <TextInput
+                  id="userTxt"
+                  error={renderErrorMessage("uname") ? true : false}
+                  errorMessage={
+                    renderErrorMessage("uname")
+                      ? renderErrorMessage("uname")
+                      : ""
+                  }
+                  type="text"
+                  name="uname"
+                  required
+                />
+              </div>
+              <div className="input-container">
+                <Title>Password</Title>
+                <TextInput
+                  error={renderErrorMessage("pass") ? true : false}
+                  errorMessage={
+                    renderErrorMessage("pass") ? renderErrorMessage("pass") : ""
+                  }
+                  type="password"
+                  name="pass"
+                  required
+                />
+              </div>
+              <Button className="mt-6" type="submit">
+                Login
+              </Button>
+            </form>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

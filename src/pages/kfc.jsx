@@ -3,6 +3,7 @@ import {
   StatusOfflineIcon,
   StatusOnlineIcon,
 } from "@heroicons/react/outline";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import {
   Badge,
   Tab,
@@ -174,6 +175,7 @@ export default function Kfc() {
                   <TableHeaderCell>Product</TableHeaderCell>
                   <TableHeaderCell>Price</TableHeaderCell>
                   <TableHeaderCell>Status</TableHeaderCell>
+                  <TableHeaderCell>Automation</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -200,6 +202,7 @@ export default function Kfc() {
                                 : "Available"}
                             </TableCell>
                           </Badge>
+                          <TableCell><Badge icon={CheckCircleIcon} className="bg-transparent">WhatsApp</Badge></TableCell>
                         </TableRow>
                       );
                     })
