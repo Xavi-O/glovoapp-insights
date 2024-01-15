@@ -184,7 +184,7 @@ export default function Kfc() {
                   <TableHeaderCell>Product</TableHeaderCell>
                   <TableHeaderCell>Price</TableHeaderCell>
                   <TableHeaderCell>Status</TableHeaderCell>
-                  <TableHeaderCell>Automation</TableHeaderCell>
+                  <TableHeaderCell>Notifications</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
