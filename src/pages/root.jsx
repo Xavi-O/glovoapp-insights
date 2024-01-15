@@ -15,7 +15,7 @@ export default function Root() {
     <>
       <div className="flex">
         <nav
-          className=" m-1 w-1/12 md:w-1/6 h-screen sticky top-0 bg-zinc-50"
+          className=" m-1 w-max md:w-1/6 h-screen sticky top-0 bg-zinc-50"
           id="sidebar"
         >
           <Link className="" to={`/home`}>
