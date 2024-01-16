@@ -3,7 +3,6 @@ import {
   Metric,
   TextInput,
   Title,
-  Text,
   Italic,
   Card,
 } from "@tremor/react";

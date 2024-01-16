@@ -19,7 +19,11 @@ export default function Home() {
     <>
       <div className="mb-20 text-center">
         <Metric>Glovoapp Insights</Metric>
-        <img className="w-2/3 mx-auto my-5" src="dashimage.png" alt="dash image" />
+        <img
+          className="w-2/3 mx-auto my-5"
+          src="dashimage.png"
+          alt="dash image"
+        />
 
         <Title className="text-2xl">Overview</Title>
         <Text className="">

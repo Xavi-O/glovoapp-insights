@@ -5,8 +5,6 @@ import {
 } from "@heroicons/react/outline";
 import {
   Badge,
-  Card,
-  Grid,
   Tab,
   TabGroup,
   TabList,
