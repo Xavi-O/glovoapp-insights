@@ -16,6 +16,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
+  TextInput,
   Title,
 } from "@tremor/react";
 import { useEffect, useState } from "react";
@@ -35,23 +36,42 @@ export default function Stores() {
 
   //Fetch time and city routes
   async function fetchCities() {
-    const timeResponse = await fetch("https://horrible-bird-24.telebit.io/time");
-    const nboResponse = await fetch("https://horrible-bird-24.telebit.io/stores/nairobi");
-    const mbsResponse = await fetch("https://horrible-bird-24.telebit.io/stores/mombasa");
-    const ksmResponse = await fetch("https://horrible-bird-24.telebit.io/stores/kisumu");
-    const nakResponse = await fetch("https://horrible-bird-24.telebit.io/stores/nakuru");
-    const eldResponse = await fetch("https://horrible-bird-24.telebit.io/stores/eldoret");
-    const syoResponse = await fetch("https://horrible-bird-24.telebit.io/stores/syokimau");
+    const timeResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/time"
+    );
+    const nboResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/nairobi"
+    );
+    const mbsResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/mombasa"
+    );
+    const ksmResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/kisumu"
+    );
+    const nakResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/nakuru"
+    );
+    const eldResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/eldoret"
+    );
+    const syoResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/syokimau"
+    );
     const nrkResponse = await fetch(
       "https://horrible-bird-24.telebit.io/stores/ngong-rongai-karen"
     );
-    const thkResponse = await fetch("https://horrible-bird-24.telebit.io/stores/thika");
-    const diaResponse = await fetch("https://horrible-bird-24.telebit.io/stores/diani");
+    const thkResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/thika"
+    );
+    const diaResponse = await fetch(
+      "https://horrible-bird-24.telebit.io/stores/diani"
+    );
 
     const time = await timeResponse.json();
     setTimeData(time);
     const nboStores = await nboResponse.json();
     setnbo(nboStores);
+    setNboSearch(nboStores);
     const mbsStores = await mbsResponse.json();
     setmbs(mbsStores);
     const ksmStores = await ksmResponse.json();
@@ -74,18 +94,23 @@ export default function Stores() {
     fetchCities();
   }, []);
 
+  const [nboSearch, setNboSearch] = useState(nbo);
+
+  const searchStore = (event) => {
+    setNboSearch(
+      nbo.filter((row) =>
+        row.storename
+          .toLowerCase()
+          .replaceAll(" ", "")
+          .includes(event.target.value.toLowerCase().replaceAll(" ", ""))
+      )
+    );
+  };
+
   return (
     <>
       <Title>KE Stores Status</Title>
       <Badge color="emerald">{"Updated on " + timeData}</Badge>
-      {/*
-      <TextInput
-        onChange={nameSearch}
-        className="mt-4 w-1/4"
-        icon={SearchIcon}
-        placeholder="Search..."
-      />
-      */}
       <TabGroup className="">
         <TabList>
           <Tab>NBO</Tab>
@@ -105,13 +130,20 @@ export default function Stores() {
               <TableHead>
                 <TableRow>
                   <TableHeaderCell>City</TableHeaderCell>
-                  <TableHeaderCell>Store</TableHeaderCell>
+                  <TableHeaderCell>
+                    <TextInput
+                      onChange={searchStore}
+                      className="ml-1 w-1/2 border-none"
+                      icon={SearchIcon}
+                      placeholder="Store"
+                    />
+                  </TableHeaderCell>
                   <TableHeaderCell>Status</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nbo
-                  ? nbo.map((row, i) => {
+                {nboSearch
+                  ? nboSearch.map((row, i) => {
                       return (
                         <TableRow>
                           <TableCell>{row.city}</TableCell>
