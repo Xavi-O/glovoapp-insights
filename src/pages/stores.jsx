@@ -1,9 +1,7 @@
 import {
-  SearchIcon,
-  StatusOfflineIcon,
-  StatusOnlineIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/outline";
-import {
+/*import {
   Badge,
   Tab,
   TabGroup,
@@ -124,7 +122,7 @@ export default function Stores() {
           <Tab>DIA</Tab>
         </TabList>
         <TabPanels>
-          {/*Tne table list for NBO stores*/}
+          {/*Tne table list for NBO stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -172,7 +170,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for MBS stores*/}
+          {/*Tne table list for MBS stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -213,7 +211,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for KSM stores*/}
+          {/*Tne table list for KSM stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -254,7 +252,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for NAK stores*/}
+          {/*Tne table list for NAK stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -295,7 +293,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for ELD stores*/}
+          {/*Tne table list for ELD stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -336,7 +334,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for SYO stores*/}
+          {/*Tne table list for SYO stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -377,7 +375,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for NRK stores*/}
+          {/*Tne table list for NRK stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -418,7 +416,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for THK stores*/}
+          {/*Tne table list for THK stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -459,7 +457,7 @@ export default function Stores() {
               </TableBody>
             </Table>
           </TabPanel>
-          {/*Tne table list for DIA stores*/}
+          {//Tne table list for DIA stores*}
           <TabPanel>
             <Table className="">
               <TableHead>
@@ -504,4 +502,16 @@ export default function Stores() {
       </TabGroup>
     </>
   );
+}
+*/
+
+import { Badge, Metric } from '@tremor/react'
+import React from 'react'
+
+export default function Stores() {
+  return (
+    <div className='grid h-screen place-items-center'>
+      <Badge color={'red'} icon={InformationCircleIcon}>This Page is depriciated for a Q-Commerce store</Badge>
+    </div>
+  )
 }
