@@ -505,7 +505,7 @@ export default function Stores() {
 }
 */
 
-import { Badge, Metric } from '@tremor/react'
+import { Badge } from '@tremor/react'
 import React from 'react'
 
 export default function Stores() {

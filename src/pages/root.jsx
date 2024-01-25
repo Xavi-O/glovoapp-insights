@@ -49,7 +49,7 @@ export default function Root() {
             <TabList color="emerald" className="w-5/6 md:w-5/6 lg:w-3/5">
               <NavLink to={`/stores`}>
                 <Tab className="mt-8" icon={OfficeBuildingIcon}>
-                  <p className="hidden md:block">Stores</p>
+                  <p className="hidden md:block">Q-Commerce</p>
                 </Tab>
               </NavLink>
             </TabList>
