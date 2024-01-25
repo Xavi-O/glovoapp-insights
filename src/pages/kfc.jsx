@@ -118,7 +118,7 @@ export default function Kfc() {
           <DatePicker
             id="datePicker"
             className="w-1/4 mr-6"
-            defaultValue={date}
+            defaultValue={new Date('1/24/2024')}
             enableClear={false}
             displayFormat="M/dd/yyyy"
             minDate={new Date('1/24/2024')}
