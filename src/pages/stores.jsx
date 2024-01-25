@@ -511,7 +511,7 @@ import React from 'react'
 export default function Stores() {
   return (
     <div className='grid h-screen place-items-center'>
-      <Badge color={'red'} icon={InformationCircleIcon}>This Page is depriciated for a Q-Commerce store</Badge>
+      <Badge color={'red'} icon={InformationCircleIcon}>This Page is Deprecated for a Q-Commerce Store</Badge>
     </div>
   )
 }
