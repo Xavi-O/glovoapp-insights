@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+/*import React, { useState, useEffect } from "react";
 ("use client");
 import {
   AreaChart,
@@ -156,7 +156,7 @@ export default function Dashboard() {
           <Tab>KFC</Tab>
         </TabList>
         <TabPanels>
-          {/*Tne dashboard for KE stores*/}
+          {/*Tne dashboard for KE stores*}
           <TabPanel>
             <div className="mt-0">
               <Grid numItemsMd={2} numItemsLg={3} className="gap-6 mt-6 mb-6">
@@ -246,7 +246,7 @@ export default function Dashboard() {
               </Card>
             </div>
           </TabPanel>
-          {/*Tne dashboard for KFC products*/}
+          {/*Tne dashboard for KFC products*}
           <TabPanel>
             <div className="mt-0">
               <Grid numItemsMd={2} numItemsLg={2} className="gap-6 mt-6 mb-6">
@@ -321,4 +321,12 @@ export default function Dashboard() {
       </TabGroup>
     </main>
   );
+}
+*/
+import React from 'react'
+
+export default function Dashboard() {
+  return (
+    <div></div>
+  )
 }

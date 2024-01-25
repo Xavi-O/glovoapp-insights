@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <Navigate to="/home" replace />,
       },
       {
         path: "/stores",

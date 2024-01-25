@@ -1,11 +1,15 @@
+import React, { useState, useEffect } from "react";
+("use client");
 import {
-  SearchIcon,
-  StatusOfflineIcon,
-  StatusOnlineIcon,
-} from "@heroicons/react/outline";
-import { CheckCircleIcon } from "@heroicons/react/solid";
-import {
-  Badge,
+  AreaChart,
+  BadgeDelta,
+  Card,
+  DatePicker,
+  Flex,
+  Grid,
+  Metric,
+  ProgressBar,
+  Subtitle,
   Tab,
   TabGroup,
   TabList,
@@ -17,217 +21,293 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-  TextInput,
+  Text,
   Title,
+  Tracker,
 } from "@tremor/react";
-import { useEffect, useState } from "react";
-import React from "react";
+//current date/time
+let time = new Date().toLocaleTimeString('en-GB', { hour: "numeric", minute: "numeric" });
+let date = new Date();
 
 export default function Kfc() {
-  const [timeData, setTimeData] = useState("Loading...");
-  const [all, setall] = useState([{}]);
-  const [active, setactive] = useState([{}]);
-  const [inactive, setinactive] = useState([{}]);
+  const [kfcData, setKfcData] = useState([{}]);
 
-  //Fetch time and city routes
   async function fetchProducts() {
-    const timeResponse = await fetch(
-      "https://horrible-bird-24.telebit.io/time"
-    );
-    const allResponse = await fetch("https://horrible-bird-24.telebit.io/kfc");
-    const activeResponse = await fetch(
-      "https://horrible-bird-24.telebit.io/kfc/active"
-    );
-    const inactiveResponse = await fetch(
-      "https://horrible-bird-24.telebit.io/kfc/inactive"
-    );
+    const kfcDataResponse = await fetch("https://xavi-o.github.io/glovoappinsights/kfctimeline.json");
 
-    const time = await timeResponse.json();
-    setTimeData(time);
-    const allProducts = await allResponse.json();
-    setall(allProducts);
-    setallStatus(allProducts);
-    const activeProducts = await activeResponse.json();
-    setactive(activeProducts);
-    const inactiveProducts = await inactiveResponse.json();
-    setinactive(inactiveProducts);
+    const data = await kfcDataResponse.json();
+
+    //Filter products fetched (Time Filter)
+    const pickedDate = document.getElementById('datePicker').textContent
+    const specTime = data.filter(row => row.date === pickedDate)
+    setKfcData(specTime);
+
   }
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProducts()
+  }, [])
 
-  const [allstatus, setallStatus] = useState(all);
+  const availableNbo = kfcData.filter(row => row.status === 'Available' && row.city === 'NBO').length
+  const notAvailableNbo = kfcData.filter(row => row.status === 'Not Available' && row.city === 'NBO').length
 
-  const allStatusFilter = (event) => {
-    setallStatus(
-      all.filter((row) =>
-        row.title
-          .toLowerCase()
-          .replaceAll(" ", "")
-          .includes(event.target.value.toLowerCase().replaceAll(" ", ""))
-      )
-    );
-  };
+  const availableMbs = kfcData.filter(row => row.status === 'Available' && row.city === 'MBS').length
+  const notAvailableMbs = kfcData.filter(row => row.status === 'Not Available' && row.city === 'MBS').length
+
+  const availableNrk = kfcData.filter(row => row.status === 'Available' && row.city === 'NRK').length
+  const notAvailableNrk = kfcData.filter(row => row.status === 'Not Available' && row.city === 'NRK').length
+
+  const availableNak = kfcData.filter(row => row.status === 'Available' && row.city === 'NAK').length
+  const notAvailableNak = kfcData.filter(row => row.status === 'Not Available' && row.city === 'NAK').length
+
+  const availableEld = kfcData.filter(row => row.status === 'Available' && row.city === 'ELD').length
+  const notAvailableEld = kfcData.filter(row => row.status === 'Not Available' && row.city === 'ELD').length
+
+  const availableKsm = kfcData.filter(row => row.status === 'Available' && row.city === 'KSM').length
+  const notAvailableKsm = kfcData.filter(row => row.status === 'Not Available' && row.city === 'KSM').length
+
+  const availableThk = kfcData.filter(row => row.status === 'Available' && row.city === 'THK').length
+  const notAvailableThk = kfcData.filter(row => row.status === 'Not Available' && row.city === 'THK').length
+
+  const available = kfcData.filter(row => row.status === 'Available').length
+  const notAvailable = kfcData.filter(row => row.status === 'Not Available').length
+
+  const kfcChartData = [
+    {
+      city: "NBO",
+      Available: ((availableNbo / (availableNbo + notAvailableNbo)) * 100).toFixed(0),
+      'Not Available': ((notAvailableNbo / (availableNbo + notAvailableNbo)) * 100).toFixed(0),
+    },
+    {
+      city: "MBS",
+      Available: ((availableMbs / (availableMbs + notAvailableMbs)) * 100).toFixed(0),
+      'Not Available': ((notAvailableMbs / (availableMbs + notAvailableMbs)) * 100).toFixed(0),
+    },
+    {
+      city: "NRK",
+      Available: ((availableNrk / (availableNrk + notAvailableNrk)) * 100).toFixed(0),
+      'Not Available': ((notAvailableNrk / (availableNrk + notAvailableNrk)) * 100).toFixed(0),
+    },
+    {
+      city: "NAK",
+      Available: ((availableNak / (availableNak + notAvailableNak)) * 100).toFixed(0),
+      'Not Available': ((notAvailableNak / (availableNak + notAvailableNak)) * 100).toFixed(0),
+    },
+    {
+      city: "ELD",
+      Available: ((availableEld / (availableEld + notAvailableEld)) * 100).toFixed(0),
+      'Not Available': ((notAvailableEld / (availableEld + notAvailableEld)) * 100).toFixed(0),
+    },
+    {
+      city: "KSM",
+      Available: ((availableKsm / (availableKsm + notAvailableKsm)) * 100).toFixed(0),
+      'Not Available': ((notAvailableKsm / (availableKsm + notAvailableKsm)) * 100).toFixed(0),
+    },
+    {
+      city: "THK",
+      Available: ((availableThk / (availableThk + notAvailableThk)) * 100).toFixed(0),
+      'Not Available': ((notAvailableThk / (availableThk + notAvailableThk)) * 100).toFixed(0),
+    },
+  ]
 
   return (
-    <>
-      <Title>KFC Top Products</Title>
-      <Badge color="emerald">{"Updated on " + timeData}</Badge>
-
-      <TabGroup className="">
-        <TabList>
-          <Tab>All</Tab>
-          <Tab>Active</Tab>
-          <Tab>Inactive</Tab>
+    <main>
+      <TabGroup>
+        <Flex className="">
+          <Title>Status of KFC products </Title>
+          <DatePicker
+            id="datePicker"
+            className="w-1/4 mr-6"
+            defaultValue={date}
+            enableClear={false}
+            displayFormat="M/dd/yyyy"
+            minDate={new Date('1/24/2024')}
+            maxDate={date}
+            onSelect={fetchProducts()}
+          />
+        </Flex>
+        <TabList variant="solid">
+          <Tab>Dashboard</Tab>
+          <Tab>Overview</Tab>
         </TabList>
         <TabPanels>
-          {/*All products in all the KFC Stores*/}
           <TabPanel>
-            <TextInput
-              onChange={allStatusFilter}
-              className="mr-4 w-1/4"
-              icon={SearchIcon}
-              placeholder="Search Product..."
-            />
-            <Table className="mt-5">
-              <TableHead>
-                <TableRow>
-                  <TableHeaderCell>City</TableHeaderCell>
-                  <TableHeaderCell>Location</TableHeaderCell>
-                  <TableHeaderCell>Product</TableHeaderCell>
-                  <TableHeaderCell>Price</TableHeaderCell>
-                  <TableHeaderCell>Status</TableHeaderCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {allstatus
-                  ? allstatus.map((row, i) => {
-                      return (
-                        <TableRow>
-                          <TableCell>{row.city}</TableCell>
-                          <TableCell>{row.address}</TableCell>
-                          <TableCell>{row.title}</TableCell>
-                          <TableCell>{row.price}</TableCell>
-                          <Badge
-                            className="bg-transparent"
-                            color={row.price === "-" ? "red" : "green"}
-                            icon={
-                              row.price === "-"
-                                ? StatusOfflineIcon
-                                : StatusOnlineIcon
-                            }
-                          >
-                            <TableCell>
-                              {row.price === "-"
-                                ? "Not Available"
-                                : "Available"}
-                            </TableCell>
-                          </Badge>
-                        </TableRow>
-                      );
-                    })
-                  : "Loading Data..."}
-              </TableBody>
-            </Table>
+            <Grid numItemsMd={2} numItemsLg={2} className="gap-6 my-4">
+              <Card className="max-w-lg mx-auto">
+                <Flex alignItems="start">
+                  <div>
+                    <Text>Available</Text>
+                    <Metric>{available}</Metric>
+                  </div>
+                  <BadgeDelta deltaType="increase">
+                    {((available / (available + notAvailable)) * 100).toFixed(0)}%
+                  </BadgeDelta>
+                </Flex>
+                <Flex className="mt-4">
+                  <Text>
+                    {((available / (available + notAvailable)) * 100).toFixed(0)}%
+                  </Text>
+                  <Text>Total Available Products</Text>
+                </Flex>
+                <ProgressBar
+                  value={((available / (available + notAvailable)) * 100).toFixed(0)}
+                  className="mt-2"
+                />
+              </Card>
+              <Card className="max-w-lg mx-auto">
+                <Flex alignItems="start">
+                  <div>
+                    <Text>Not Available</Text>
+                    <Metric>{notAvailable}</Metric>
+                  </div>
+                  <BadgeDelta deltaType="decrease">
+                    {((notAvailable / (available + notAvailable)) * 100).toFixed(0)}%
+                  </BadgeDelta>
+                </Flex>
+                <Flex className="mt-4">
+                  <Text>
+                    {((notAvailable / (available + notAvailable)) * 100).toFixed(0)}%
+                  </Text>
+                  <Text>Products Not Available</Text>
+                </Flex>
+                <ProgressBar
+                  color="red"
+                  value={((notAvailable / (available + notAvailable)) * 100).toFixed(0)}
+                  className="mt-2"
+                />
+              </Card>
+            </Grid>
+            <Card>
+              <Subtitle>An Area Chart of KFC Top Products Active Status </Subtitle>
+              <AreaChart
+                data={kfcChartData}
+                index="city"
+                categories={['Available', 'Not Available']}
+                colors={['emerald', 'red']}
+                valueFormatter={num => num + '%'}
+              />
+            </Card>
           </TabPanel>
-          {/*All active products in all the KFC Stores*/}
           <TabPanel>
-            <Table className="mt-5">
-              <TableHead>
-                <TableRow>
-                  <TableHeaderCell>City</TableHeaderCell>
-                  <TableHeaderCell>Location</TableHeaderCell>
-                  <TableHeaderCell>Product</TableHeaderCell>
-                  <TableHeaderCell>Price</TableHeaderCell>
-                  <TableHeaderCell>Status</TableHeaderCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {active
-                  ? active.map((row, i) => {
-                      return (
+            <Card>
+              <TabGroup>
+                <TabList>
+                  <Tab>Active</Tab>
+                  <Tab>Inctive</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <Table>
+                      <TableHead>
                         <TableRow>
-                          <TableCell>{row.city}</TableCell>
-                          <TableCell>{row.address}</TableCell>
-                          <TableCell>{row.title}</TableCell>
-                          <TableCell>{row.price}</TableCell>
-                          <Badge
-                            className="bg-transparent"
-                            color={row.price === "-" ? "red" : "green"}
-                            icon={
-                              row.price === "-"
-                                ? StatusOfflineIcon
-                                : StatusOnlineIcon
-                            }
-                          >
-                            <TableCell>
-                              {row.price === "-"
-                                ? "Not Available"
-                                : "Available"}
-                            </TableCell>
-                          </Badge>
+                          <TableHeaderCell>City</TableHeaderCell>
+                          <TableHeaderCell>Address</TableHeaderCell>
+                          <TableHeaderCell>Title</TableHeaderCell>
+                          <TableHeaderCell>Price</TableHeaderCell>
+                          <TableHeaderCell>Date</TableHeaderCell>
+                          <TableHeaderCell>Tracker</TableHeaderCell>
                         </TableRow>
-                      );
-                    })
-                  : "Loading Data..."}
-              </TableBody>
-            </Table>
-          </TabPanel>
-          {/*All inactive products in all the KFC Stores*/}
-          <TabPanel>
-            <Table className="mt-5">
-              <TableHead>
-                <TableRow>
-                  <TableHeaderCell>City</TableHeaderCell>
-                  <TableHeaderCell>Location</TableHeaderCell>
-                  <TableHeaderCell>Product</TableHeaderCell>
-                  <TableHeaderCell>Price</TableHeaderCell>
-                  <TableHeaderCell>Status</TableHeaderCell>
-                  <TableHeaderCell>Notifications</TableHeaderCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {inactive
-                  ? inactive.map((row, i) => {
-                      return (
+                      </TableHead>
+                      <TableBody>
+                        {kfcData.filter(state => state.status === 'Available') ?
+                          kfcData.filter(state => state.status === 'Available').map((row, i) => {
+                            return (<TableRow>
+                              <TableCell>{row.city}</TableCell>
+                              <TableCell>{row.address.substring(0, 19)}</TableCell>
+                              <TableCell>{row.title}</TableCell>
+                              <TableCell>{row.price}</TableCell>
+                              <TableCell>{row.date}</TableCell>
+                              <TableCell>
+                                <Tracker
+                                  className=""
+                                  data={[
+                                    {
+                                      tooltip: '0900',
+                                      color: row.time === '0900' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '0900' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1300',
+                                      color: row.time === '1300' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1300' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1500',
+                                      color: row.time === '1500' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1500' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1800',
+                                      color: row.time === '1800' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1800' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                  ]}
+                                />
+                              </TableCell>
+                            </TableRow>);
+                          }) : 'Loading...'}
+                      </TableBody>
+                    </Table>
+                  </TabPanel>
+                  <TabPanel>
+                    <Table>
+                      <TableHead>
                         <TableRow>
-                          <TableCell>{row.city}</TableCell>
-                          <TableCell>{row.address}</TableCell>
-                          <TableCell>{row.title}</TableCell>
-                          <TableCell>{row.price}</TableCell>
-                          <Badge
-                            className="bg-transparent"
-                            color={row.price === "-" ? "red" : "green"}
-                            icon={
-                              row.price === "-"
-                                ? StatusOfflineIcon
-                                : StatusOnlineIcon
-                            }
-                          >
-                            <TableCell>
-                              {row.price === "-"
-                                ? "Not Available"
-                                : "Available"}
-                            </TableCell>
-                          </Badge>
-                          <TableCell>
-                            <Badge
-                              icon={CheckCircleIcon}
-                              className="bg-transparent"
-                            >
-                              WhatsApp
-                            </Badge>
-                          </TableCell>
+                          <TableHeaderCell>City</TableHeaderCell>
+                          <TableHeaderCell>Address</TableHeaderCell>
+                          <TableHeaderCell>Title</TableHeaderCell>
+                          <TableHeaderCell>Price</TableHeaderCell>
+                          <TableHeaderCell>Date</TableHeaderCell>
+                          <TableHeaderCell>Tracker</TableHeaderCell>
                         </TableRow>
-                      );
-                    })
-                  : "Loading Data..."}
-              </TableBody>
-            </Table>
+                      </TableHead>
+                      <TableBody>
+                        {kfcData.filter(state => state.status === 'Not Available') ?
+                          kfcData.filter(state => state.status === 'Not Available').map((row, i) => {
+                            return (<TableRow>
+                              <TableCell>{row.city}</TableCell>
+                              <TableCell>{row.address.substring(0,19)}</TableCell>
+                              <TableCell>{row.title}</TableCell>
+                              <TableCell>{row.price}</TableCell>
+                              <TableCell>{row.date}</TableCell>
+                              <TableCell>
+                                <Tracker
+                                  className=""
+                                  data={[
+                                    {
+                                      tooltip: '0900',
+                                      color: row.time === '0900' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '0900' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1300',
+                                      color: row.time === '1300' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1300' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1500',
+                                      color: row.time === '1500' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1500' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                    {
+                                      tooltip: '1800',
+                                      color: row.time === '1800' && row.status === 'Available' ? 'emerald' :
+                                        row.time === '1800' && row.status === 'Not Available' ? 'red' : 'neutral'
+                                    },
+                                  ]}
+                                />
+                              </TableCell>
+                            </TableRow>);
+                          }) : 'Loading...'}
+                      </TableBody>
+                    </Table>
+                  </TabPanel>
+                </TabPanels>
+              </TabGroup>
+            </Card>
           </TabPanel>
         </TabPanels>
       </TabGroup>
-    </>
+    </main>
   );
 }

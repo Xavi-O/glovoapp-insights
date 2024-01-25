@@ -26,3 +26,25 @@ export default function Logout() {
     </>
   );
 }
+/*
+const [kfcData, setKfcData] = useState('')
+const [loading, setLoading] = useState(false)
+
+async function fetchProducts() {
+  const kfcDataResponse = await fetch("https://xavi-o.github.io/glovoappinsights/kfctimeline.json");
+
+  const data = await timeResponse.json();
+  setKfcData(data);
+
+}
+
+useEffect(() => {
+  fetchProducts()
+}, [])
+
+<div>
+  {kfcData ? kfcData.map((row, i) => {
+    <p>{row.address}</p>
+  }) : 'Loading...'}
+</div>
+*/

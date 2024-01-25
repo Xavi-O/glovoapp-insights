@@ -15,7 +15,7 @@ export default function Root() {
     <>
       <div className="flex">
         <nav
-          className=" m-1 w-min md:w-1/6 h-screen sticky top-0 bg-zinc-50"
+          className="m-1 w-min md:w-1/6 h-screen sticky top-0 bg-zinc-50"
           id="sidebar"
         >
           <Link className="" to={`/home`}>
@@ -30,7 +30,7 @@ export default function Root() {
               src="glovoapp-icon.svg"
             ></img>
           </Link>
-          
+
           <TabGroup className="ml-0 md:ml-4">
             <TabList color="emerald" className="w-5/6 md:w-5/6 lg:w-3/5">
               <NavLink to={`/home`}>
@@ -40,30 +40,24 @@ export default function Root() {
               </NavLink>
             </TabList>
             <TabList color="emerald" className="w-5/6 md:w-5/6 lg:w-3/5">
-              <NavLink to={`/dashboard`}>
-                <Tab className="mt-8" icon={ChartPieIcon}>
-                  <p className="hidden md:block">Dashboard</p>
+              <NavLink to={`/kfc-store`}>
+                <Tab className="mt-8" icon={ShoppingBagIcon}>
+                  <p className="hidden md:block">KFC</p>
                 </Tab>
               </NavLink>
             </TabList>
             <TabList color="emerald" className="w-5/6 md:w-5/6 lg:w-3/5">
               <NavLink to={`/stores`}>
                 <Tab className="mt-8" icon={OfficeBuildingIcon}>
-                <p className="hidden md:block">Stores</p>
+                  <p className="hidden md:block">Stores</p>
                 </Tab>
               </NavLink>
             </TabList>
-            <TabList color="emerald" className="w-5/6 md:w-5/6 lg:w-3/5">
-              <NavLink to={`/kfc-store`}>
-                <Tab className="mt-8" icon={ShoppingBagIcon}>
-                <p className="hidden md:block">KFC</p>
-                </Tab>
-              </NavLink>
-            </TabList>
+
             <TabList color="red" className="w-5/6 md:w-5/6 lg:w-3/5">
               <NavLink to={`/logout`}>
                 <Tab className="mt-8" icon={StopIcon}>
-                <p className="hidden md:block">Logout</p>
+                  <p className="hidden md:block">Logout</p>
                 </Tab>
               </NavLink>
             </TabList>
