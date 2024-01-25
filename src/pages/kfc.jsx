@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 ("use client");
 import {
   AreaChart,
+  Badge,
   BadgeDelta,
   Card,
   DatePicker,
   Flex,
   Grid,
+  Italic,
   Metric,
   ProgressBar,
+  Select,
+  SelectItem,
   Subtitle,
   Tab,
   TabGroup,
@@ -25,12 +29,15 @@ import {
   Title,
   Tracker,
 } from "@tremor/react";
+import { InformationCircleIcon, StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline";
 //current date/time
 let time = new Date().toLocaleTimeString('en-GB', { hour: "numeric", minute: "numeric" });
 let date = new Date();
 
 export default function Kfc() {
   const [kfcData, setKfcData] = useState([{}]);
+  const [timeData, setTimeData] = useState([{}])
+  const [dateData, setDateData] = useState([{}])
 
   async function fetchProducts() {
     const kfcDataResponse = await fetch("https://xavi-o.github.io/glovoappinsights/kfctimeline.json");
@@ -39,8 +46,12 @@ export default function Kfc() {
 
     //Filter products fetched (Time Filter)
     const pickedDate = document.getElementById('datePicker').textContent
-    const specTime = data.filter(row => row.date === pickedDate)
-    setKfcData(specTime);
+    const specDate = data.filter(row => row.date === pickedDate)
+    setDateData(specDate)
+    const pickedTime = document.getElementById('timePicker').textContent
+    const specTime = dateData.filter(row => row.time === pickedTime)
+    setTimeData(specTime)
+    setKfcData(timeData);
 
   }
 
@@ -113,23 +124,37 @@ export default function Kfc() {
   return (
     <main>
       <TabGroup>
+        <Title>Status of KFC products</Title>
         <Flex className="">
-          <Title>Status of KFC products </Title>
-          <DatePicker
-            id="datePicker"
-            className="w-1/4 mr-6"
-            defaultValue={date}
-            enableClear={false}
-            displayFormat="M/dd/yyyy"
-            minDate={new Date('1/24/2024')}
-            maxDate={date}
-            onSelect={fetchProducts()}
-          />
+          <TabList variant="solid">
+            <Tab>Dashboard</Tab>
+            <Tab>Overview</Tab>
+          </TabList>
+          <div className="flex">
+            <Badge color={'black'}>Date: </Badge>
+            <DatePicker
+              id="datePicker"
+              className="w-fit"
+              defaultValue={date}
+              enableClear={false}
+              displayFormat="M/dd/yyyy"
+              minDate={new Date('1/24/2024')}
+              maxDate={date}
+              onSelect={fetchProducts()}
+            />
+          </div>
+          <div className="flex">
+          <Badge color={'black'}>Time: </Badge>
+            <Select enableClear={false} id="timePicker" defaultValue="0900" className="w-fit mr-6">
+              <SelectItem onSelect={fetchProducts()} value="0900">0900</SelectItem>
+              <SelectItem value="1300">1300</SelectItem>
+              <SelectItem value="1500">1500</SelectItem>
+              <SelectItem value="1800">1800</SelectItem>
+            </Select>
+          </div>
+
         </Flex>
-        <TabList variant="solid">
-          <Tab>Dashboard</Tab>
-          <Tab>Overview</Tab>
-        </TabList>
+
         <TabPanels>
           <TabPanel>
             <Grid numItemsMd={2} numItemsLg={2} className="gap-6 my-4">
@@ -140,7 +165,7 @@ export default function Kfc() {
                     <Metric>{available}</Metric>
                   </div>
                   <BadgeDelta deltaType="increase">
-                    {((available / (available + notAvailable)) * 100).toFixed(0)}%
+                    {((available / (available + notAvailable)) * 100).toFixed(0)}% Uptime
                   </BadgeDelta>
                 </Flex>
                 <Flex className="mt-4">
@@ -161,7 +186,7 @@ export default function Kfc() {
                     <Metric>{notAvailable}</Metric>
                   </div>
                   <BadgeDelta deltaType="decrease">
-                    {((notAvailable / (available + notAvailable)) * 100).toFixed(0)}%
+                    {((notAvailable / (available + notAvailable)) * 100).toFixed(0)}% Downtime
                   </BadgeDelta>
                 </Flex>
                 <Flex className="mt-4">
@@ -191,10 +216,12 @@ export default function Kfc() {
           <TabPanel>
             <Card>
               <TabGroup>
-                <TabList>
-                  <Tab>Active</Tab>
-                  <Tab>Inctive</Tab>
-                </TabList>
+                <Flex>
+                  <TabList>
+                    <Tab>Active</Tab>
+                    <Tab>Inactive</Tab>
+                  </TabList>
+                </Flex>
                 <TabPanels>
                   <TabPanel>
                     <Table>
@@ -204,8 +231,7 @@ export default function Kfc() {
                           <TableHeaderCell>Address</TableHeaderCell>
                           <TableHeaderCell>Title</TableHeaderCell>
                           <TableHeaderCell>Price</TableHeaderCell>
-                          <TableHeaderCell>Date</TableHeaderCell>
-                          <TableHeaderCell>Tracker</TableHeaderCell>
+                          <TableHeaderCell>Status</TableHeaderCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -216,34 +242,7 @@ export default function Kfc() {
                               <TableCell>{row.address.substring(0, 19)}</TableCell>
                               <TableCell>{row.title}</TableCell>
                               <TableCell>{row.price}</TableCell>
-                              <TableCell>{row.date}</TableCell>
-                              <TableCell>
-                                <Tracker
-                                  className=""
-                                  data={[
-                                    {
-                                      tooltip: '0900',
-                                      color: row.time === '0900' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '0900' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1300',
-                                      color: row.time === '1300' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1300' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1500',
-                                      color: row.time === '1500' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1500' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1800',
-                                      color: row.time === '1800' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1800' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                  ]}
-                                />
-                              </TableCell>
+                              <TableCell><Badge icon={StatusOnlineIcon} color={'emerald'}>{row.status}</Badge></TableCell>
                             </TableRow>);
                           }) : 'Loading...'}
                       </TableBody>
@@ -257,8 +256,7 @@ export default function Kfc() {
                           <TableHeaderCell>Address</TableHeaderCell>
                           <TableHeaderCell>Title</TableHeaderCell>
                           <TableHeaderCell>Price</TableHeaderCell>
-                          <TableHeaderCell>Date</TableHeaderCell>
-                          <TableHeaderCell>Tracker</TableHeaderCell>
+                          <TableHeaderCell>Status</TableHeaderCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -266,37 +264,10 @@ export default function Kfc() {
                           kfcData.filter(state => state.status === 'Not Available').map((row, i) => {
                             return (<TableRow>
                               <TableCell>{row.city}</TableCell>
-                              <TableCell>{row.address.substring(0,19)}</TableCell>
+                              <TableCell>{row.address.substring(0, 19)}</TableCell>
                               <TableCell>{row.title}</TableCell>
                               <TableCell>{row.price}</TableCell>
-                              <TableCell>{row.date}</TableCell>
-                              <TableCell>
-                                <Tracker
-                                  className=""
-                                  data={[
-                                    {
-                                      tooltip: '0900',
-                                      color: row.time === '0900' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '0900' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1300',
-                                      color: row.time === '1300' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1300' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1500',
-                                      color: row.time === '1500' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1500' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                    {
-                                      tooltip: '1800',
-                                      color: row.time === '1800' && row.status === 'Available' ? 'emerald' :
-                                        row.time === '1800' && row.status === 'Not Available' ? 'red' : 'neutral'
-                                    },
-                                  ]}
-                                />
-                              </TableCell>
+                              <TableCell><Badge icon={StatusOfflineIcon} color="red">{row.status}</Badge></TableCell>
                             </TableRow>);
                           }) : 'Loading...'}
                       </TableBody>
