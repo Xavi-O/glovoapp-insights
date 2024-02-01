@@ -8,7 +8,6 @@ import {
   DatePicker,
   Flex,
   Grid,
-  Italic,
   Metric,
   ProgressBar,
   Select,
@@ -27,15 +26,14 @@ import {
   TableRow,
   Text,
   Title,
-  Tracker,
 } from "@tremor/react";
-import { InformationCircleIcon, StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline";
+import { StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline";
 //current date/time
 let time = new Date().toLocaleTimeString('en-GB', { hour: "numeric", minute: "numeric" });
 let date = new Date();
 
 export default function Kfc() {
-  const [kfcData, setKfcData] = useState([{}]);
+  const [kfcData, setKfcData] = useState([{}])
   const [timeData, setTimeData] = useState([{}])
   const [dateData, setDateData] = useState([{}])
 
@@ -52,7 +50,6 @@ export default function Kfc() {
     const specTime = dateData.filter(row => row.time === pickedTime)
     setTimeData(specTime)
     setKfcData(timeData);
-
   }
 
   useEffect(() => {
@@ -137,14 +134,14 @@ export default function Kfc() {
               className="w-fit"
               defaultValue={date}
               enableClear={false}
-              displayFormat="M/dd/yyyy"
+              displayFormat="M/d/yyyy"
               minDate={new Date('1/24/2024')}
               maxDate={date}
               onSelect={fetchProducts()}
             />
           </div>
           <div className="flex">
-          <Badge color={'black'}>Time: </Badge>
+            <Badge color={'black'}>Time: </Badge>
             <Select enableClear={false} id="timePicker" defaultValue="0900" className="w-fit mr-6">
               <SelectItem onSelect={fetchProducts()} value="0900">0900</SelectItem>
               <SelectItem value="1300">1300</SelectItem>
@@ -152,9 +149,7 @@ export default function Kfc() {
               <SelectItem value="1800">1800</SelectItem>
             </Select>
           </div>
-
         </Flex>
-
         <TabPanels>
           <TabPanel>
             <Grid numItemsMd={2} numItemsLg={2} className="gap-6 my-4">
