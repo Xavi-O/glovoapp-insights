@@ -1,18 +1,4 @@
-import React from "react";
-("use client");
-import {
-  Bold,
-  Callout,
-  Card,
-  Flex,
-  Grid,
-  Italic,
-  List,
-  Metric,
-  Subtitle,
-  Text,
-  Title,
-} from "@tremor/react";
+import React from 'react'
 
 export default function Home() {
   return (

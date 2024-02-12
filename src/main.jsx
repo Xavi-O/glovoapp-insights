@@ -23,27 +23,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Navigate to="/login" replace />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
       {
         path: "/home",
-        element: <Home />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
       {
         path: "/dashboard",
-        element: <Navigate to="/home" replace />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
       {
         path: "/stores",
-        element: <Stores />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
       {
         path: "/kfc-store",
-        element: <Kfc />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
       {
         path: "/logout",
-        element: <Logout />,
+        element: <Navigate to={window.location = "https://glovoapp-insights-app.vercel.app/"} replace />,
       },
     ],
   },
